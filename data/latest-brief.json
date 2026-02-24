@@ -1,0 +1,9 @@
+{
+  "generated": "2026-02-24T08:15:59.450Z",
+  "period": {
+    "start": "2026-02-17",
+    "end": "2026-02-24"
+  },
+  "eventCount": 1,
+  "briefHtml": "\n    <h3>Executive Summary</h3>\n    <p>During the period 2026-02-17 to 2026-02-24, Sanctions Radar detected <strong>1</strong> signals \n    related to cryptocurrency sanctions enforcement and regulatory compliance across monitored entities. \n    Several developments warrant attention from compliance teams.</p>\n    \n    <h3>Key Developments</h3>\n    <ul><li><strong>General</strong>: Signal detected <span class=\"source\">(CPW)</span></li></ul>\n    \n    <h3>Regulatory Landscape</h3>\n    <p>Active monitoring continues across OFAC (US), EU sanctions frameworks, and FATF guidance implementation. \n    Cryptocurrency mixers and privacy protocols remain under heightened scrutiny.</p>\n    \n    <h3>Risk Assessment</h3>\n    <p class=\"risk-badge risk-low\">LOW</p>\n    <p>Low activity period. Maintain baseline monitoring.</p>\n    \n    <h3>Recommended Actions</h3>\n    <ul>\n      <li>Review counterparty screening lists for recent additions</li>\n      <li>Verify transaction monitoring rules cover flagged entity types</li>\n      <li>Update internal sanctions lists with any newly designated entities</li>\n      <li>Brief compliance team on emerging regulatory trends</li>\n    </ul>"
+}

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sanctions Radar - Crypto Compliance Intelligence</title>
+  <style>
+    :root {
+      --bg: #0a0e17;
+      --surface: #131a2b;
+      --border: #1e2a42;
+      --text: #c8d6e5;
+      --heading: #f0f4f8;
+      --accent: #4fc3f7;
+      --accent2: #7c4dff;
+      --danger: #ff5252;
+      --warning: #ffa726;
+      --success: #66bb6a;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+    .container { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem; }
+    
+    header {
+      text-align: center;
+      padding: 3rem 0 2rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 2rem;
+    }
+    .logo {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.02em;
+    }
+    .subtitle {
+      color: var(--text);
+      font-size: 1rem;
+      margin-top: 0.5rem;
+      opacity: 0.7;
+    }
+    .period {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.4rem 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 0.85rem;
+      color: var(--accent);
+    }
+    .stats {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .stat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.5rem;
+      text-align: center;
+      min-width: 140px;
+    }
+    .stat-value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.6;
+    }
+
+    .brief {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+    .brief h3 {
+      color: var(--heading);
+      font-size: 1.15rem;
+      margin: 1.5rem 0 0.75rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .brief h3:first-child { margin-top: 0; }
+    .brief ul { padding-left: 1.5rem; }
+    .brief li { margin: 0.4rem 0; }
+    .brief strong { color: var(--heading); }
+    .brief .source { color: var(--accent); font-size: 0.85rem; }
+    
+    .risk-badge {
+      display: inline-block;
+      padding: 0.3rem 1rem;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+    }
+    .risk-high { background: rgba(255,82,82,0.15); color: var(--danger); border: 1px solid var(--danger); }
+    .risk-medium { background: rgba(255,167,38,0.15); color: var(--warning); border: 1px solid var(--warning); }
+    .risk-low { background: rgba(102,187,106,0.15); color: var(--success); border: 1px solid var(--success); }
+
+    .events-section {
+      margin: 2rem 0;
+    }
+    .events-section h2 {
+      color: var(--heading);
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+    .event-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 0.75rem;
+      transition: border-color 0.2s;
+    }
+    .event-card:hover { border-color: var(--accent); }
+    .event-title { color: var(--heading); font-weight: 600; }
+    .event-title a { color: var(--accent); text-decoration: none; }
+    .event-title a:hover { text-decoration: underline; }
+    .event-meta {
+      font-size: 0.8rem;
+      opacity: 0.6;
+      margin-top: 0.3rem;
+    }
+    .event-tag {
+      display: inline-block;
+      padding: 0.15rem 0.5rem;
+      background: rgba(79,195,247,0.1);
+      color: var(--accent);
+      border-radius: 4px;
+      font-size: 0.75rem;
+      margin-right: 0.5rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      border-top: 1px solid var(--border);
+      margin-top: 3rem;
+      font-size: 0.85rem;
+      opacity: 0.5;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    @media (max-width: 600px) {
+      .container { padding: 1rem; }
+      .logo { font-size: 1.8rem; }
+      .stats { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">Sanctions Radar</div>
+      <div class="subtitle">AI-Powered Crypto Compliance Intelligence</div>
+      <div class="period">2026-02-17 &mdash; 2026-02-24</div>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-value">1</div>
+          <div class="stat-label">Signals Detected</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">4</div>
+          <div class="stat-label">Categories Tracked</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">N/A</div>
+          <div class="stat-label">Sources</div>
+        </div>
+      </div>
+    </header>
+
+    <section class="brief">
+      
+    <h3>Executive Summary</h3>
+    <p>During the period 2026-02-17 to 2026-02-24, Sanctions Radar detected <strong>1</strong> signals 
+    related to cryptocurrency sanctions enforcement and regulatory compliance across monitored entities. 
+    Several developments warrant attention from compliance teams.</p>
+    
+    <h3>Key Developments</h3>
+    <ul><li><strong>General</strong>: Signal detected <span class="source">(CPW)</span></li></ul>
+    
+    <h3>Regulatory Landscape</h3>
+    <p>Active monitoring continues across OFAC (US), EU sanctions frameworks, and FATF guidance implementation. 
+    Cryptocurrency mixers and privacy protocols remain under heightened scrutiny.</p>
+    
+    <h3>Risk Assessment</h3>
+    <p class="risk-badge risk-low">LOW</p>
+    <p>Low activity period. Maintain baseline monitoring.</p>
+    
+    <h3>Recommended Actions</h3>
+    <ul>
+      <li>Review counterparty screening lists for recent additions</li>
+      <li>Verify transaction monitoring rules cover flagged entity types</li>
+      <li>Update internal sanctions lists with any newly designated entities</li>
+      <li>Brief compliance team on emerging regulatory trends</li>
+    </ul>
+    </section>
+
+    <section class="events-section" id="signals">
+      <h2>Raw Signal Feed</h2>
+      <div id="events-list">
+        
+          <div class="event-card">
+            <div class="event-title">Signal detected</div>
+            <div class="event-meta">
+              <span class="event-tag">general</span>
+              
+              <span>2/14/2026</span>
+            </div>
+          </div>
+        
+      </div>
+    </section>
+
+    <footer>
+      <p>Powered by <a href="https://rapidapi.com/cpwatch/api/cpw-tracker">CPW API</a> &middot; 
+      AI analysis via <a href="https://docs.github.com/en/github-models">GitHub Models</a></p>
+      <p style="margin-top:0.5rem">Built for <a href="https://github.com/1712n/dn-institute">DN Institute</a> Challenge Program</p>
+    </footer>
+  </div>
+</body>
+</html>

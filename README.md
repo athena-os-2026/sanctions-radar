@@ -1,40 +1,71 @@
-# Product Kit Template
+# Sanctions Radar
 
-Auto-fetch data from CPW API and build your product on top.
+**AI-Powered Crypto Compliance Intelligence Brief**
 
-### Setup and Build
+Sanctions Radar monitors cryptocurrency entities for sanctions enforcement signals, regulatory actions, and compliance risks. It generates a weekly AI-powered intelligence brief designed for compliance teams and risk analysts.
 
-1. Use this template: Click "Use this template" button above
-2. Subscribe to API: Go to [CPW API](https://rapidapi.com/CPWatch/api/cpw-tracker) and subscribe to `Basic` plan (100 free requests/month)
-3. Add API key: Go to Settings → Secrets → Actions, add `RAPIDAPI_KEY`
-4. Сustomize data source: Edit [`scripts/api-call.js`](scripts/api-call.js) to change what you track
-5. Build your product: Use the auto-updating [`data/events.json`](data/events.json) however you want
+**Live Dashboard**: [View Latest Brief](https://athena-os-2026.github.io/sanctions-radar/)
 
-### What It Does
+## What It Does
 
-- Monitors industry chatter for catastrophic event signals
-- Fetches fresh data weekly (configurable schedule)
-- Saves results to [`data/events.json`](data/events.json)
-- Provides foundation for early detection tools
+- **Monitors 4 threat categories**: Sanctions enforcement, regulatory actions, sanctions evasion via DeFi, and money laundering through mixers
+- **Aggregates signals** from the CPW API across multiple entity types
+- **Generates AI analysis** using GitHub Models (GPT-4o-mini) to produce actionable intelligence briefs
+- **Deploys automatically** to GitHub Pages on a weekly schedule
+- **Assigns risk levels** (HIGH/MEDIUM/LOW) based on signal volume and severity
 
-### Customize Your Detection
+## How It's Different
 
-Edit [`scripts/api-call.js`](scripts/api-call.js):
+Unlike generic crypto monitoring tools, Sanctions Radar focuses specifically on the **compliance and sanctions enforcement** niche:
 
-```javascript
-// Change these parameters:
-entities: "financial custodians",        // What to monitor
-topic: "cyberattack"                   // Event type (default: "catastrophic event")
+- Tracks **cryptocurrency exchanges**, **DeFi protocols**, **mixer services**, and **cryptocurrency services**
+- Monitors for **sanctions**, **regulatory enforcement**, **sanctions evasion**, and **money laundering** signals
+- Produces **structured intelligence briefs** with executive summaries, risk assessments, and actionable recommendations
+- Designed for **compliance officers** and **risk management teams**
+
+## Architecture
+
+```
+CPW API ──► api-call.js ──► data/events.json ──► generate-brief.js ──► index.html
+                                                       │
+                                                 GitHub Models
+                                                 (AI Analysis)
 ```
 
-Time range is configurable (max 7 days):
+1. `scripts/api-call.js` - Fetches data from CPW API across 4 monitoring categories
+2. `scripts/generate-brief.js` - Processes events and generates AI-powered intelligence briefs via GitHub Models
+3. GitHub Actions runs weekly, updates data, generates brief, and deploys to Pages
+
+## Setup
+
+1. **Fork/clone this repository**
+2. **Subscribe to CPW API**: Go to [CPW API](https://rapidapi.com/CPWatch/api/cpw-tracker) and subscribe to the Basic plan
+3. **Add secrets** in Settings > Secrets > Actions:
+   - `RAPIDAPI_KEY` - Your RapidAPI key for CPW Tracker
+4. **Enable GitHub Pages**: Settings > Pages > Source: GitHub Actions
+5. **Run the workflow**: Actions > Deploy Sanctions Radar > Run workflow
+
+## Customization
+
+Edit `scripts/api-call.js` to change monitored entities and topics:
+
 ```javascript
-startTime.setDate(startTime.getDate() - 1)  // Last 24 hours
- ```
+const queries = [
+  { entities: "cryptocurrency exchanges", topic: "sanctions" },
+  { entities: "cryptocurrency services", topic: "regulatory enforcement" },
+  // Add your own categories...
+]
+```
 
-### Build Your Tool
+Edit the AI prompt in `scripts/generate-brief.js` to change the analysis style.
 
-Use the event data to build alert systems, monitoring dashboards, notification tools, research platforms, or whatever problem you're interested in.
+## Built With
 
-> [!NOTE]
-> The [workflow file](.github/workflows/deploy.yml) includes commented examples for GitHub Pages deployment and social media integration.
+- [CPW API](https://rapidapi.com/cpwatch/api/cpw-tracker) - Catastrophic event signal tracking
+- [GitHub Models](https://docs.github.com/en/github-models) - AI-powered analysis
+- [GitHub Pages](https://pages.github.com/) - Static site hosting
+- [GitHub Actions](https://github.com/features/actions) - Automated weekly updates
+
+## License
+
+Built for the [DN Institute Challenge Program](https://github.com/1712n/dn-institute#-challenge-program) using the [Product Development Kit](https://github.com/1712n/product-kit-template) template.
