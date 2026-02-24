@@ -1,4 +1,4 @@
-name: Deploy Sanctions Radar
+name: Deploy CryptoThreat Radar
 
 on:
   push:
@@ -24,13 +24,13 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Fetch latest data
+      - name: Fetch latest threat data
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         run: node scripts/api-call.js
         env:
           RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
 
-      - name: Generate AI intelligence brief
+      - name: Generate AI intelligence brief (3-pass analysis)
         run: node scripts/generate-brief.js
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -42,9 +42,9 @@ jobs:
           git add data/ index.html
           if ! git diff --staged --quiet; then
             if [ "${{ github.event_name }}" = "schedule" ]; then
-              git commit -m "Weekly update - $(date -u '+%Y-%m-%d %H:%M')"
+              git commit -m "📡 Weekly threat intelligence update - $(date -u '+%Y-%m-%d %H:%M')"
             else
-              git commit -m "Update brief - $(date -u '+%Y-%m-%d %H:%M')"
+              git commit -m "🛡️ Update threat brief - $(date -u '+%Y-%m-%d %H:%M')"
             fi
             git push
           fi

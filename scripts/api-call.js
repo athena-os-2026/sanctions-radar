@@ -8,9 +8,6 @@ if (!API_KEY) {
   process.exit(1)
 }
 
-/**
- * Get start and end dates for data fetch (last 7 days)
- */
 function getDateRange() {
   const now = new Date()
   const endTime = now
@@ -23,16 +20,27 @@ function getDateRange() {
 }
 
 /**
- * Fetch data from the CPW API for multiple query configurations
+ * Expanded threat monitoring across 8 crypto threat categories
  */
 async function fetchData() {
   const { startTime, endTime } = getDateRange()
   
   const queries = [
-    { entities: "cryptocurrency exchanges", topic: "sanctions" },
-    { entities: "cryptocurrency services", topic: "regulatory enforcement" },
-    { entities: "DeFi protocols", topic: "sanctions evasion" },
-    { entities: "cryptocurrency mixers", topic: "money laundering" },
+    // Sanctions & Regulatory
+    { entities: "cryptocurrency exchanges", topic: "sanctions", category: "sanctions", severity: "critical" },
+    { entities: "cryptocurrency services", topic: "regulatory enforcement", category: "regulatory", severity: "high" },
+    { entities: "DeFi protocols", topic: "sanctions evasion", category: "sanctions-evasion", severity: "critical" },
+    { entities: "cryptocurrency mixers", topic: "money laundering", category: "money-laundering", severity: "critical" },
+    // Cyber Threats
+    { entities: "cryptocurrency exchanges", topic: "cyberattack", category: "cyberattack", severity: "critical" },
+    { entities: "DeFi protocols", topic: "exploit", category: "exploit", severity: "critical" },
+    { entities: "cryptocurrency projects", topic: "rug pull", category: "rug-pull", severity: "high" },
+    // Market Manipulation
+    { entities: "cryptocurrency exchanges", topic: "wash trading", category: "wash-trading", severity: "high" },
+    { entities: "cryptocurrency markets", topic: "market manipulation", category: "market-manipulation", severity: "high" },
+    // Fraud & Scams
+    { entities: "cryptocurrency", topic: "fraud", category: "fraud", severity: "high" },
+    { entities: "cryptocurrency", topic: "phishing attack", category: "phishing", severity: "medium" },
   ]
 
   console.log(`Fetching data for period: ${startTime} to ${endTime}`)
@@ -65,10 +73,11 @@ async function fetchData() {
       const data = await response.json()
       const results = Array.isArray(data) ? data : []
       
-      // Tag results with their query category
       results.forEach(r => {
-        r._category = query.topic
+        r._category = query.category
+        r._severity = query.severity
         r._entities = query.entities
+        r._topic = query.topic
       })
       
       allResults.push(...results)
@@ -81,13 +90,9 @@ async function fetchData() {
   return allResults
 }
 
-/**
- * Save data to JSON file
- */
 async function saveData(data) {
   const sorted = data.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
   
-  // Deduplicate by URL
   const seen = new Set()
   const unique = sorted.filter(item => {
     const key = item.url || JSON.stringify(item)
@@ -98,7 +103,6 @@ async function saveData(data) {
 
   await mkdir("data", { recursive: true })
   await writeFile("data/events.json", JSON.stringify(unique, null, 2))
-
   console.log(`Saved ${unique.length} unique items to data/events.json`)
 }
 
