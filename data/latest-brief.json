@@ -1,9 +1,18 @@
 {
-  "generated": "2026-02-24T08:16:29.943Z",
+  "generated": "2026-02-24T10:04:10.348Z",
   "period": {
     "start": "2026-02-17",
     "end": "2026-02-24"
   },
   "eventCount": 1,
-  "briefHtml": "\n    <h3>Executive Summary</h3>\n    <p>During the period 2026-02-17 to 2026-02-24, Sanctions Radar detected <strong>1</strong> signals \n    related to cryptocurrency sanctions enforcement and regulatory compliance across monitored entities. \n    Several developments warrant attention from compliance teams.</p>\n    \n    <h3>Key Developments</h3>\n    <ul><li><strong>General</strong>: Signal detected <span class=\"source\">(CPW)</span></li></ul>\n    \n    <h3>Regulatory Landscape</h3>\n    <p>Active monitoring continues across OFAC (US), EU sanctions frameworks, and FATF guidance implementation. \n    Cryptocurrency mixers and privacy protocols remain under heightened scrutiny.</p>\n    \n    <h3>Risk Assessment</h3>\n    <p class=\"risk-badge risk-low\">LOW</p>\n    <p>Low activity period. Maintain baseline monitoring.</p>\n    \n    <h3>Recommended Actions</h3>\n    <ul>\n      <li>Review counterparty screening lists for recent additions</li>\n      <li>Verify transaction monitoring rules cover flagged entity types</li>\n      <li>Update internal sanctions lists with any newly designated entities</li>\n      <li>Brief compliance team on emerging regulatory trends</li>\n    </ul>"
+  "threatCategories": [
+    null
+  ],
+  "entities": [],
+  "trend": "stable",
+  "topRisk": "Insufficient data for analysis",
+  "socialThread": [
+    "🚨 Weekly CryptoThreat Radar Brief (2026-02-17 → 2026-02-24)\n\n1 threat signals detected across the crypto ecosystem.\n\nFull report: https://athena-os-2026.github.io/sanctions-radar/\n\n#CryptoCompliance #Web3Security"
+  ],
+  "briefHtml": "\n    <h3>Executive Summary</h3>\n    <p>During 2026-02-17 to 2026-02-24, CryptoThreat Radar detected <strong>1</strong> signals \n    across <strong>1</strong> threat categories covering the cryptocurrency ecosystem.\n    Overall threat posture: <span class=\"risk-badge risk-low\">LOW</span></p>\n    \n    <h3>Critical Threats</h3>\n    <ul><li>No critical threats detected this period</li></ul>\n\n    <h3>Sanctions &amp; Regulatory</h3>\n    <p>Active monitoring across OFAC (US), EU sanctions, and FATF guidance. 0 sanctions signals, 0 regulatory signals detected.</p>\n\n    <h3>Cyber Threats &amp; Exploits</h3>\n    <p>0 cyberattack signals, 0 exploit signals detected.</p>\n\n    <h3>Market Integrity</h3>\n    <p>0 wash trading signals, 0 rug pull signals, 0 manipulation signals detected.</p>\n\n    <h3>Risk Matrix</h3>\n    <div class=\"risk-matrix\">\n      <div class=\"risk-score\">2/10</div>\n      <p>Overall threat level: <span class=\"risk-badge risk-low\">LOW</span></p>\n    </div>\n\n    <h3>Recommended Actions</h3>\n    <ul>\n      <li>Review and update sanctions screening lists</li>\n      <li>Verify transaction monitoring covers all flagged entity types</li>\n      <li>Brief compliance team on emerging threats</li>\n      <li>Update risk assessments for DeFi protocol exposure</li>\n    </ul>"
 }

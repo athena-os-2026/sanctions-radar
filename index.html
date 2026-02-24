@@ -3,153 +3,391 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sanctions Radar - Crypto Compliance Intelligence</title>
+  <title>CryptoThreat Radar — AI-Powered Crypto Threat Intelligence</title>
+  
+  <!-- Social Media Meta Tags -->
+  <meta property="og:title" content="CryptoThreat Radar — Weekly Crypto Threat Intelligence Brief">
+  <meta property="og:description" content="Weekly crypto threat intelligence brief covering 1 threat categories. 1 signals detected from 2026-02-17 to 2026-02-24.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://athena-os-2026.github.io/sanctions-radar/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CryptoThreat Radar — Weekly Brief">
+  <meta name="twitter:description" content="Weekly crypto threat intelligence brief covering 1 threat categories. 1 signals detected from 2026-02-17 to 2026-02-24.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
   <style>
     :root {
-      --bg: #0a0e17;
-      --surface: #131a2b;
-      --border: #1e2a42;
-      --text: #c8d6e5;
-      --heading: #f0f4f8;
-      --accent: #4fc3f7;
-      --accent2: #7c4dff;
-      --danger: #ff5252;
-      --warning: #ffa726;
-      --success: #66bb6a;
+      --bg: #06080f;
+      --surface: #0d1117;
+      --surface2: #161b22;
+      --border: #21262d;
+      --border-hover: #388bfd;
+      --text: #c9d1d9;
+      --text-muted: #8b949e;
+      --heading: #f0f6fc;
+      --accent: #58a6ff;
+      --accent2: #bc8cff;
+      --danger: #f85149;
+      --warning: #d29922;
+      --success: #3fb950;
+      --critical: #f85149;
+      --info: #58a6ff;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Inter', -apple-system, sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.7;
-      min-height: 100vh;
     }
-    .container { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .container { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
     
+    /* Navigation */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(6,8,15,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 1.5rem;
+    }
+    .nav-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-brand { font-weight: 800; font-size: 1.1rem; color: var(--accent); }
+    .nav-links { display: flex; gap: 1.5rem; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* Header */
     header {
       text-align: center;
-      padding: 3rem 0 2rem;
+      padding: 4rem 0 3rem;
       border-bottom: 1px solid var(--border);
       margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 50% 80%, rgba(88,166,255,0.06) 0%, transparent 50%);
+      pointer-events: none;
     }
     .logo {
-      font-size: 2.5rem;
+      font-size: 3rem;
       font-weight: 800;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
     }
-    .subtitle {
-      color: var(--text);
-      font-size: 1rem;
-      margin-top: 0.5rem;
-      opacity: 0.7;
-    }
+    .subtitle { color: var(--text-muted); font-size: 1.05rem; margin-top: 0.5rem; }
     .period {
       display: inline-block;
       margin-top: 1rem;
-      padding: 0.4rem 1rem;
+      padding: 0.4rem 1.2rem;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 20px;
       font-size: 0.85rem;
+      font-family: 'JetBrains Mono', monospace;
       color: var(--accent);
     }
+    
+    /* Stats Grid */
     .stats {
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 1rem;
-      justify-content: center;
-      margin-top: 1.5rem;
-      flex-wrap: wrap;
+      margin-top: 2rem;
     }
     .stat {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 1rem 1.5rem;
+      padding: 1.25rem;
       text-align: center;
-      min-width: 140px;
+      transition: border-color 0.2s;
     }
+    .stat:hover { border-color: var(--border-hover); }
     .stat-value {
-      font-size: 1.8rem;
+      font-size: 2rem;
       font-weight: 700;
-      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
     }
+    .stat-value.critical { color: var(--danger); }
+    .stat-value.warning { color: var(--warning); }
+    .stat-value.accent { color: var(--accent); }
+    .stat-value.success { color: var(--success); }
     .stat-label {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      opacity: 0.6;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
     }
 
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 0;
+      margin: 2rem 0 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .tab {
+      padding: 0.75rem 1.5rem;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 0.9rem;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .tab:hover { color: var(--text); }
+    .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* Brief Section */
     .brief {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 12px;
       padding: 2rem;
-      margin: 2rem 0;
+      margin: 1.5rem 0;
     }
     .brief h3 {
       color: var(--heading);
-      font-size: 1.15rem;
-      margin: 1.5rem 0 0.75rem;
-      padding-bottom: 0.4rem;
+      font-size: 1.1rem;
+      margin: 2rem 0 0.75rem;
+      padding-bottom: 0.5rem;
       border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
     .brief h3:first-child { margin-top: 0; }
     .brief ul { padding-left: 1.5rem; }
-    .brief li { margin: 0.4rem 0; }
+    .brief li { margin: 0.5rem 0; }
     .brief strong { color: var(--heading); }
     .brief .source { color: var(--accent); font-size: 0.85rem; }
+    .brief table.entity-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.9rem;
+    }
+    .brief table.entity-table th {
+      text-align: left;
+      padding: 0.5rem 0.75rem;
+      border-bottom: 2px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .brief table.entity-table td {
+      padding: 0.5rem 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
     
     .risk-badge {
       display: inline-block;
-      padding: 0.3rem 1rem;
-      border-radius: 6px;
-      font-weight: 700;
-      font-size: 0.9rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.75rem;
       letter-spacing: 0.05em;
+      text-transform: uppercase;
     }
-    .risk-high { background: rgba(255,82,82,0.15); color: var(--danger); border: 1px solid var(--danger); }
-    .risk-medium { background: rgba(255,167,38,0.15); color: var(--warning); border: 1px solid var(--warning); }
-    .risk-low { background: rgba(102,187,106,0.15); color: var(--success); border: 1px solid var(--success); }
+    .risk-critical { background: rgba(248,81,73,0.15); color: var(--danger); border: 1px solid rgba(248,81,73,0.3); }
+    .risk-high { background: rgba(210,153,34,0.15); color: var(--warning); border: 1px solid rgba(210,153,34,0.3); }
+    .risk-medium { background: rgba(88,166,255,0.15); color: var(--info); border: 1px solid rgba(88,166,255,0.3); }
+    .risk-low { background: rgba(63,185,80,0.15); color: var(--success); border: 1px solid rgba(63,185,80,0.3); }
 
-    .events-section {
-      margin: 2rem 0;
+    .risk-matrix {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1rem;
+      background: var(--surface2);
+      border-radius: 8px;
+      margin: 0.5rem 0;
     }
-    .events-section h2 {
-      color: var(--heading);
-      font-size: 1.3rem;
-      margin-bottom: 1rem;
+    .risk-score {
+      font-size: 2.5rem;
+      font-weight: 800;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--warning);
     }
+
+    /* Category Threat Map */
+    .threat-map {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 0.75rem;
+      margin: 1.5rem 0;
+    }
+    .threat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+      transition: all 0.2s;
+      cursor: default;
+    }
+    .threat-card:hover { border-color: var(--border-hover); transform: translateY(-2px); }
+    .threat-card .tc-icon { font-size: 1.5rem; }
+    .threat-card .tc-label { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem; }
+    .threat-card .tc-count { font-size: 1.4rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+
+    /* Signal Feed */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+    .filter-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.35rem 0.75rem;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      border-color: var(--cat-color, var(--accent));
+      color: var(--cat-color, var(--accent));
+      background: rgba(88,166,255,0.05);
+    }
+    .filter-count {
+      background: var(--surface2);
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      margin-left: 0.25rem;
+    }
+
     .event-card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 10px;
+      border-radius: 8px;
       padding: 1rem 1.25rem;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.5rem;
       transition: border-color 0.2s;
+      border-left: 3px solid transparent;
     }
-    .event-card:hover { border-color: var(--accent); }
-    .event-title { color: var(--heading); font-weight: 600; }
+    .event-card:hover { border-color: var(--border-hover); }
+    .event-card[data-severity="critical"] { border-left-color: var(--danger); }
+    .event-card[data-severity="high"] { border-left-color: var(--warning); }
+    .event-card[data-severity="medium"] { border-left-color: var(--info); }
+    .event-title { color: var(--heading); font-weight: 600; font-size: 0.95rem; }
     .event-title a { color: var(--accent); text-decoration: none; }
     .event-title a:hover { text-decoration: underline; }
-    .event-meta {
-      font-size: 0.8rem;
-      opacity: 0.6;
-      margin-top: 0.3rem;
-    }
+    .event-meta { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.3rem; display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
     .event-tag {
       display: inline-block;
-      padding: 0.15rem 0.5rem;
-      background: rgba(79,195,247,0.1);
-      color: var(--accent);
+      padding: 0.1rem 0.5rem;
+      background: var(--surface2);
       border-radius: 4px;
-      font-size: 0.75rem;
-      margin-right: 0.5rem;
+      font-size: 0.7rem;
     }
+
+    /* Social Media Section */
+    .social-section {
+      margin: 2rem 0;
+    }
+    .social-section h2 {
+      color: var(--heading);
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .tweet-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+    .tweet-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .tweet-avatar { font-size: 1.2rem; }
+    .tweet-author { font-weight: 600; color: var(--heading); font-size: 0.9rem; }
+    .tweet-handle { color: var(--text-muted); font-size: 0.85rem; }
+    .tweet-number { margin-left: auto; color: var(--text-muted); font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; }
+    .tweet-body { font-size: 0.95rem; line-height: 1.5; white-space: pre-wrap; }
+    .tweet-actions { margin-top: 0.5rem; }
+    .tweet-copy-btn {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 0.3rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+    .tweet-copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    .entity-type {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      background: var(--surface2);
+      padding: 0.1rem 0.4rem;
+      border-radius: 3px;
+    }
+
+    /* Share Bar */
+    .share-bar {
+      display: flex;
+      gap: 0.75rem;
+      margin: 1.5rem 0;
+      flex-wrap: wrap;
+    }
+    .share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      text-decoration: none;
+      font-weight: 500;
+      transition: opacity 0.2s;
+    }
+    .share-btn:hover { opacity: 0.8; }
+    .share-twitter { background: #1d9bf0; color: white; }
+    .share-linkedin { background: #0a66c2; color: white; }
+    .share-telegram { background: #26a5e4; color: white; }
+    .share-copy { background: var(--surface2); color: var(--text); border: 1px solid var(--border); cursor: pointer; font-family: inherit; }
 
     footer {
       text-align: center;
@@ -157,87 +395,229 @@
       border-top: 1px solid var(--border);
       margin-top: 3rem;
       font-size: 0.85rem;
-      opacity: 0.5;
+      color: var(--text-muted);
     }
     footer a { color: var(--accent); text-decoration: none; }
 
     @media (max-width: 600px) {
       .container { padding: 1rem; }
-      .logo { font-size: 1.8rem; }
-      .stats { flex-direction: column; align-items: center; }
+      .logo { font-size: 2rem; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .threat-map { grid-template-columns: repeat(2, 1fr); }
+      .nav-links { display: none; }
     }
   </style>
 </head>
 <body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="nav-brand">🛡️ CryptoThreat Radar</div>
+      <div class="nav-links">
+        <a href="#brief">Intelligence Brief</a>
+        <a href="#threats">Threat Map</a>
+        <a href="#signals">Signal Feed</a>
+        <a href="#social">Social</a>
+        <a href="#entities">Entities</a>
+      </div>
+    </div>
+  </nav>
+
   <div class="container">
     <header>
-      <div class="logo">Sanctions Radar</div>
-      <div class="subtitle">AI-Powered Crypto Compliance Intelligence</div>
-      <div class="period">2026-02-17 &mdash; 2026-02-24</div>
+      <div class="logo">CryptoThreat Radar</div>
+      <div class="subtitle">AI-Powered Crypto Threat Intelligence Platform</div>
+      <div class="period">2026-02-17 → 2026-02-24</div>
       <div class="stats">
         <div class="stat">
-          <div class="stat-value">1</div>
-          <div class="stat-label">Signals Detected</div>
+          <div class="stat-value accent">1</div>
+          <div class="stat-label">Total Signals</div>
         </div>
         <div class="stat">
-          <div class="stat-value">4</div>
-          <div class="stat-label">Categories Tracked</div>
+          <div class="stat-value critical">0</div>
+          <div class="stat-label">Critical</div>
         </div>
         <div class="stat">
-          <div class="stat-value">N/A</div>
+          <div class="stat-value warning">0</div>
+          <div class="stat-label">High Severity</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value accent">1</div>
+          <div class="stat-label">Threat Categories</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value success">N/A</div>
           <div class="stat-label">Sources</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value accent">0</div>
+          <div class="stat-label">Entities Tracked</div>
         </div>
       </div>
     </header>
 
-    <section class="brief">
-      
+    <!-- Share Bar -->
+    <div class="share-bar">
+      <a class="share-btn share-twitter" href="https://twitter.com/intent/tweet?text=%F0%9F%9B%A1%EF%B8%8F%20Weekly%20CryptoThreat%20Radar%20Brief%0A%0A1%20threat%20signals%20detected%20across%201%20categories%0A%0AFull%20report%3A&url=https%3A%2F%2Fathena-os-2026.github.io%2Fsanctions-radar%2F" target="_blank" rel="noopener">𝕏 Share on Twitter</a>
+      <a class="share-btn share-linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fathena-os-2026.github.io%2Fsanctions-radar%2F" target="_blank" rel="noopener">in Share on LinkedIn</a>
+      <a class="share-btn share-telegram" href="https://t.me/share/url?url=https%3A%2F%2Fathena-os-2026.github.io%2Fsanctions-radar%2F&text=CryptoThreat%20Radar%20-%20Weekly%20Crypto%20Threat%20Intelligence%20Brief" target="_blank" rel="noopener">✈ Telegram</a>
+      <button class="share-btn share-copy" onclick="navigator.clipboard.writeText(window.location.href);this.textContent='✓ Copied!'">📋 Copy Link</button>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('brief')">📊 Intelligence Brief</button>
+      <button class="tab" onclick="switchTab('signals')">📡 Signal Feed</button>
+      <button class="tab" onclick="switchTab('social')">🐦 Social Media</button>
+      <button class="tab" onclick="switchTab('entities')">🏢 Entity Watchlist</button>
+    </div>
+
+    <!-- Tab: Intelligence Brief -->
+    <div id="tab-brief" class="tab-content active">
+      <section id="threats">
+        <h2 style="color: var(--heading); font-size: 1.2rem; margin: 1.5rem 0 1rem;">Threat Category Map</h2>
+        <div class="threat-map">
+          
+            <div class="threat-card">
+              <div class="tc-icon">📌</div>
+              <div class="tc-count" style="color: #4fc3f7">1</div>
+              <div class="tc-label">general</div>
+            </div>
+          
+          
+        </div>
+      </section>
+
+      <section id="brief" class="brief">
+        
     <h3>Executive Summary</h3>
-    <p>During the period 2026-02-17 to 2026-02-24, Sanctions Radar detected <strong>1</strong> signals 
-    related to cryptocurrency sanctions enforcement and regulatory compliance across monitored entities. 
-    Several developments warrant attention from compliance teams.</p>
+    <p>During 2026-02-17 to 2026-02-24, CryptoThreat Radar detected <strong>1</strong> signals 
+    across <strong>1</strong> threat categories covering the cryptocurrency ecosystem.
+    Overall threat posture: <span class="risk-badge risk-low">LOW</span></p>
     
-    <h3>Key Developments</h3>
-    <ul><li><strong>General</strong>: Signal detected <span class="source">(CPW)</span></li></ul>
-    
-    <h3>Regulatory Landscape</h3>
-    <p>Active monitoring continues across OFAC (US), EU sanctions frameworks, and FATF guidance implementation. 
-    Cryptocurrency mixers and privacy protocols remain under heightened scrutiny.</p>
-    
-    <h3>Risk Assessment</h3>
-    <p class="risk-badge risk-low">LOW</p>
-    <p>Low activity period. Maintain baseline monitoring.</p>
-    
+    <h3>Critical Threats</h3>
+    <ul><li>No critical threats detected this period</li></ul>
+
+    <h3>Sanctions &amp; Regulatory</h3>
+    <p>Active monitoring across OFAC (US), EU sanctions, and FATF guidance. 0 sanctions signals, 0 regulatory signals detected.</p>
+
+    <h3>Cyber Threats &amp; Exploits</h3>
+    <p>0 cyberattack signals, 0 exploit signals detected.</p>
+
+    <h3>Market Integrity</h3>
+    <p>0 wash trading signals, 0 rug pull signals, 0 manipulation signals detected.</p>
+
+    <h3>Risk Matrix</h3>
+    <div class="risk-matrix">
+      <div class="risk-score">2/10</div>
+      <p>Overall threat level: <span class="risk-badge risk-low">LOW</span></p>
+    </div>
+
     <h3>Recommended Actions</h3>
     <ul>
-      <li>Review counterparty screening lists for recent additions</li>
-      <li>Verify transaction monitoring rules cover flagged entity types</li>
-      <li>Update internal sanctions lists with any newly designated entities</li>
-      <li>Brief compliance team on emerging regulatory trends</li>
+      <li>Review and update sanctions screening lists</li>
+      <li>Verify transaction monitoring covers all flagged entity types</li>
+      <li>Brief compliance team on emerging threats</li>
+      <li>Update risk assessments for DeFi protocol exposure</li>
     </ul>
-    </section>
+      </section>
+    </div>
 
-    <section class="events-section" id="signals">
-      <h2>Raw Signal Feed</h2>
-      <div id="events-list">
-        
-          <div class="event-card">
-            <div class="event-title">Signal detected</div>
-            <div class="event-meta">
-              <span class="event-tag">general</span>
-              
-              <span>2/14/2026</span>
+    <!-- Tab: Signal Feed -->
+    <div id="tab-signals" class="tab-content">
+      <section class="events-section" id="signals">
+        <div class="filter-bar">
+          <button class="filter-btn active" data-category="all" onclick="filterSignals('all')">All <span class="filter-count">1</span></button>
+          <button class="filter-btn" data-category="general" style="--cat-color: #4fc3f7">📌 general <span class="filter-count">1</span></button>
+        </div>
+        <div id="events-list">
+          
+            <div class="event-card" data-category="general" data-severity="low">
+              <div class="event-title">Signal detected</div>
+              <div class="event-meta">
+                <span class="risk-badge risk-low">LOW</span>
+                <span class="event-tag">📌 General</span>
+                
+                <span>2/14/2026</span>
+              </div>
             </div>
-          </div>
-        
+          
+        </div>
+      </section>
+    </div>
+
+    <!-- Tab: Social Media -->
+    <div id="tab-social" class="tab-content">
+      <section class="social-section" id="social">
+        <h2>🐦 Social Media Ready Thread</h2>
+        <p style="color: var(--text-muted); margin-bottom: 1rem;">AI-generated Twitter/X thread ready to post. Click copy on each tweet to share individually.</p>
+        <div class="tweet-card">
+      <div class="tweet-header">
+        <span class="tweet-avatar">🛡️</span>
+        <span class="tweet-author">CryptoThreat Radar</span>
+        <span class="tweet-handle">@CryptoThreatRadar</span>
+        <span class="tweet-number">1/1</span>
       </div>
-    </section>
+      <div class="tweet-body">🚨 Weekly CryptoThreat Radar Brief (2026-02-17 → 2026-02-24)<br><br>1 threat signals detected across the crypto ecosystem.<br><br>Full report: https://athena-os-2026.github.io/sanctions-radar/<br><br>#CryptoCompliance #Web3Security</div>
+      <div class="tweet-actions">
+        <button class="tweet-copy-btn" onclick="copyTweet(this)" data-tweet="🚨 Weekly CryptoThreat Radar Brief (2026-02-17 → 2026-02-24)\n\n1 threat signals detected across the crypto ecosystem.\n\nFull report: https://athena-os-2026.github.io/sanctions-radar/\n\n#CryptoCompliance #Web3Security">📋 Copy</button>
+      </div>
+    </div>
+      </section>
+    </div>
+
+    <!-- Tab: Entity Watchlist -->
+    <div id="tab-entities" class="tab-content">
+      <section id="entities">
+        <h2 style="color: var(--heading); font-size: 1.2rem; margin: 1.5rem 0 1rem;">🏢 AI-Extracted Entity Watchlist</h2>
+        <p style="color: var(--text-muted); margin-bottom: 1rem;">Entities automatically identified and risk-scored by AI analysis of threat signals.</p>
+        <p style="color: var(--text-muted)">No entities extracted. Entity extraction requires AI analysis via GitHub Models.</p>
+        
+        <div style="margin-top: 1.5rem; padding: 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 8px;">
+          <strong style="color: var(--heading);">Trend Analysis:</strong> 
+          <span style="color: var(--warning)">
+            ➡️ Stable
+          </span>
+          <p style="margin-top: 0.5rem; color: var(--text-muted);">Insufficient data for analysis</p>
+        </div>
+      </section>
+    </div>
 
     <footer>
-      <p>Powered by <a href="https://rapidapi.com/cpwatch/api/cpw-tracker">CPW API</a> &middot; 
-      AI analysis via <a href="https://docs.github.com/en/github-models">GitHub Models</a></p>
-      <p style="margin-top:0.5rem">Built for <a href="https://github.com/1712n/dn-institute">DN Institute</a> Challenge Program</p>
+      <p>Powered by <a href="https://rapidapi.com/cpwatch/api/cpw-tracker">CPW API</a> · 
+      Multi-model AI analysis via <a href="https://docs.github.com/en/github-models">GitHub Models</a> · 
+      Updated weekly</p>
+      <p style="margin-top:0.5rem">Built for <a href="https://github.com/1712n/dn-institute">DN Institute</a> Challenge Program · 
+      <a href="https://github.com/athena-os-2026/sanctions-radar">Source Code</a></p>
     </footer>
   </div>
+
+  <script>
+    function switchTab(name) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      document.querySelector('[onclick="switchTab(\'' + name + '\')"]').classList.add('active');
+      document.getElementById('tab-' + name).classList.add('active');
+    }
+
+    function filterSignals(category) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      event.target.closest('.filter-btn').classList.add('active');
+      document.querySelectorAll('.event-card').forEach(card => {
+        card.style.display = (category === 'all' || card.dataset.category === category) ? '' : 'none';
+      });
+    }
+
+    function copyTweet(btn) {
+      const text = btn.dataset.tweet.replace(/\\n/g, '\n');
+      navigator.clipboard.writeText(text);
+      btn.textContent = '✓ Copied!';
+      setTimeout(() => btn.textContent = '📋 Copy', 2000);
+    }
+
+    // Bind filter buttons
+    document.querySelectorAll('.filter-btn[data-category]:not([data-category="all"])').forEach(btn => {
+      btn.addEventListener('click', () => filterSignals(btn.dataset.category));
+    });
+  </script>
 </body>
 </html>
